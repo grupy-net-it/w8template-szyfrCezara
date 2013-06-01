@@ -1,0 +1,121 @@
+﻿<view:LayoutAwarePage x:Class="SzyfrCezara2.MainPage"
+                      IsTabStop="false"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="using:SzyfrCezara2"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:view="using:StyleMVVM.View"
+                      view:ViewModel.Name="ViewModel"
+                      mc:Ignorable="d">
+
+    <!--
+        This grid acts as a root panel for the page that defines two rows:
+        * Row 0 contains the back button and page title
+        * Row 1 contains the rest of the page layout
+    -->
+    <Grid Style="{StaticResource LayoutRootStyle}">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.82,1"
+                                 StartPoint="0.75,0">
+                <GradientStop Color="#FF004019" />
+                <GradientStop Color="#FF018E32"
+                              Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid Background="#FF003000">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackButton"
+                    Click="GoBack"
+                    IsEnabled="False"
+                    Style="{StaticResource BackButtonStyle}" />
+            <TextBlock x:Name="PageTitle"
+                       Grid.Column="1"
+                       Text="Szyfr Cezara"
+                       Style="{StaticResource PageHeaderTextStyle}" />
+        </Grid>
+        <Grid Grid.Row="1" Margin="140,20,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="52" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="52" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBox Margin="10"
+                     Grid.Row="1"
+                     TextWrapping="Wrap"
+                     Text="{Binding PlainText, Mode=TwoWay}"
+                     TextChanged="PlainText_TextChanged"
+                     FontSize="24"
+                     AcceptsReturn="True" />
+            <TextBox Margin="10"
+                     Grid.Row="3"
+                     TextWrapping="Wrap"
+                     Text="{Binding CipherText, Mode=TwoWay}"
+                     TextChanged="CipherText_TextChanged"
+                     FontSize="24" />
+            <TextBlock Margin="10,18,10,0"
+                       Grid.Row="0"
+                       TextWrapping="Wrap"
+                       Text="Tekst"
+                       VerticalAlignment="Top"
+                       Height="52"
+                       FontFamily="Segoe UI Light"
+                       FontSize="32" />
+            <TextBlock Margin="10,18,10,0"
+                       Grid.Row="2"
+                       TextWrapping="Wrap"
+                       Text="Szyfrogram"
+                       VerticalAlignment="Top"
+                       Height="52"
+                       FontFamily="Segoe UI Light"
+                       FontSize="32"
+                       Grid.RowSpan="2" />
+        </Grid>
+        
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscape" />
+                <VisualState x:Name="Filled" />
+
+                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                    Value="{StaticResource PortraitBackButtonStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                    Value="{StaticResource SnappedBackButtonStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PageTitle"
+                                                       Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                    Value="{StaticResource SnappedPageHeaderTextStyle}" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</view:LayoutAwarePage>

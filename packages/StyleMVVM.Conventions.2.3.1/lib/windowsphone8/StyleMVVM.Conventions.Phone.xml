@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StyleMVVM.Conventions.Phone</name>
+    </assembly>
+    <members>
+        <member name="M:StyleMVVM.Conventions.ViewModel.ConventionViewModelBinder.GetProperties(System.Object)">
+            <summary>
+            Returns all public properties
+            </summary>
+            <param name="viewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:StyleMVVM.Conventions.ViewModel.ConventionViewModelBinder.GetHandlerMethods(System.Object)">
+            <summary>
+            Returns all methods that end with Handler
+            </summary>
+            <param name="viewModel"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
